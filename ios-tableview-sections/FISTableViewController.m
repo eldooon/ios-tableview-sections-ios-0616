@@ -17,31 +17,56 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    FISStudent *student1 = [[FISStudent alloc]initWithName:@"Eldon" FavoriteThings:@[@"Pizza", @"Volleyball"]];
+    
+    FISStudent *student2 = [[FISStudent alloc]initWithName:@"Henry" FavoriteThings:@[@"Hamburger", @"Basketball"]];
+    
+    FISStudent *student3 = [[FISStudent alloc]initWithName:@"Ricky" FavoriteThings:@[@"Sandwich", @"Computer Games", @"Training"]];
+    
+    self.students = @[student1,student2,student3];
+    
+
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+
+    return (NSInteger)self.students.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    
+    FISStudent *studentAtSection = self.students[(NSUInteger)section];
+    return (NSInteger)studentAtSection.favoriteThings.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"expandingCell"];
     
-    // Configure the cell...
+    FISStudent *studentAtSection = self.students[(NSUInteger)indexPath.section];
+    
+    cell.textLabel.text = studentAtSection.favoriteThings[(NSUInteger)indexPath.row];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", indexPath.row+1];
     
     return cell;
 }
-*/
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
+    FISStudent *studentAtSection = self.students[(NSUInteger)section];
+    
+    NSString *header = studentAtSection.name;
+    
+    return header;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath{
+  
+    return 4;
+}
 
 /*
 // Override to support conditional editing of the table view.
